@@ -531,7 +531,7 @@ void setWindow(PhoneWindow phoneWindow) {
 
 而这个setWindow()有两处调用：
 
-![](https://raw.githubusercontent.com/universezy/TrilogyOfViewOnAndroid/master/image/EventDispatch.png)
+![](https://raw.githubusercontent.com/universezy/TrilogyOfViewOnAndroid/master/image/setWindow.png)
 
 实际上，这两处最后都是走到同一个方法中：
 ```java
@@ -567,7 +567,7 @@ DecorView(Context context, int featureId, PhoneWindow window,
 
 ![](https://raw.githubusercontent.com/universezy/TrilogyOfViewOnAndroid/master/image/installDecor.png)
 
-这个方法有好几处调用，我们发现了其中有熟悉的方法——installDecor()，这是我们在Activity的onCreate()中用来加载xml文件，即ViewGroup的方法，于是我们查看它在Activity中的调用：
+这个方法有好几处调用，我们发现了其中有熟悉的方法——setContentView()，这是我们在Activity的onCreate()中用来加载xml文件，即ViewGroup的方法，于是我们查看它在Activity中的调用：
 ```java
 public void setContentView(@LayoutRes int layoutResID) {
     getWindow().setContentView(layoutResID);
@@ -618,7 +618,7 @@ void enqueueInputEvent(InputEvent event,
         // 处理输入事件
         doProcessInputEvents();
     } else {
-        // 调度输入事件
+        // 调度输入事件，通过Handler-Message最终也是调用doProcessInputEvents()
         scheduleProcessInputEvents();
     }
 }
